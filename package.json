@@ -1,0 +1,29 @@
+{
+  "name": "lns",
+  "version": "1.0.0",
+  "description": "Symbolic link online sync manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "lns": "bin/lns.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eirikurn/lns.git"
+  },
+  "keywords": [
+    "command-line",
+    "ln",
+    "sync"
+  ],
+  "author": "Eirikur Nilsson <eirikur@nilsson.is>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eirikurn/lns/issues"
+  },
+  "homepage": "https://github.com/eirikurn/lns",
+  "dependencies": {
+  }
+}
