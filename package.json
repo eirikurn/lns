@@ -2,7 +2,7 @@
   "name": "lns",
   "version": "1.0.0",
   "description": "Symbolic link online sync manager",
-  "main": "index.js",
+  "main": "./lib/lns.js",
   "scripts": {
     "test": "mocha"
   },

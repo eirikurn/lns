@@ -33,7 +33,7 @@ exports.write = co.wrap(function*(structure) {
 
   if (sandbox.config) {
     yield fs.mkdirp(sandboxPath);
-    yield fs.writeFile(sandbox.config, structure.config);
+    yield fs.writeFile(sandbox.config, JSON.stringify(structure.config));
   }
 
   yield [
@@ -73,7 +73,7 @@ function* writeFolder(folder, contents) {
     } else if (data[0] == '>') {
       // Symbolic link
       let target = pathUtil.join(sandbox.store, data.slice(1));
-      yield fs.symlink(path, target);
+      yield fs.symlink(target, path);
     } else {
       // Normal file
       yield fs.writeFile(path, data);
