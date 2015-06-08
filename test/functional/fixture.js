@@ -31,7 +31,7 @@ exports.write = co.wrap(function*(structure) {
     fs.rimraf(sandbox.store)
   ];
 
-  if (sandbox.config) {
+  if (structure.config) {
     yield fs.mkdirp(sandboxPath);
     yield fs.writeFile(sandbox.config, JSON.stringify(structure.config));
   }
@@ -44,13 +44,8 @@ exports.write = co.wrap(function*(structure) {
 });
 
 exports.read = co.wrap(function*() {
-  try {
-    var config = yield fs.readFile(sandbox.config, {encoding: 'utf8'});
-    config = JSON.parse(config);
-  } catch (err) {
-    if (err.code === 'ENOENT') config = null;
-    throw err;
-  }
+  var config = yield fs.readFileOrNull(sandbox.config, {encoding: 'utf8'});
+  config = JSON.parse(config);
 
   return skipNulls({
     config: config,
