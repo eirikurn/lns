@@ -3,17 +3,17 @@ let co = require('co');
 let fixture = require('./fixture');
 let lns = require('../../lib/lns');
 
-describe('lns add', function() {
+describe('lns map', function() {
   before(() => fixture.setup());
 
-  it('adds file to the store and links', co.wrap(function*() {
+  it('maps file to the store and links', co.wrap(function*() {
     yield fixture.write({
       drive: {
         test: 'A'
       }
     });
 
-    yield lns.commands.add(['test']);
+    yield lns.commands.map(['test']);
 
     yield fixture.read().should.eventually.deep.equal({
       config: {
@@ -28,7 +28,7 @@ describe('lns add', function() {
     });
   }));
 
-  it('adds multiple files', co.wrap(function*() {
+  it('maps multiple files', co.wrap(function*() {
     yield fixture.write({
       drive: {
         a: 'A',
@@ -36,7 +36,7 @@ describe('lns add', function() {
       }
     });
 
-    yield lns.commands.add(['a', 'b']);
+    yield lns.commands.map(['a', 'b']);
 
     yield fixture.read().should.eventually.deep.equal({
       config: {
@@ -53,7 +53,7 @@ describe('lns add', function() {
     });
   }));
 
-  it('adds user files to special store folder', co.wrap(function*() {
+  it('maps user files to special store folder', co.wrap(function*() {
     yield fixture.write({
       drive: {
         home: {
@@ -62,7 +62,7 @@ describe('lns add', function() {
       }
     });
 
-    yield lns.commands.add(['home/test']);
+    yield lns.commands.map(['home/test']);
 
     yield fixture.read().should.eventually.deep.equal({
       config: {
@@ -81,7 +81,7 @@ describe('lns add', function() {
     });
   }));
 
-  it('adds folder to the store', co.wrap(function*() {
+  it('maps folder to the store', co.wrap(function*() {
     yield fixture.write({
       drive: {
         test: {
@@ -90,7 +90,7 @@ describe('lns add', function() {
       }
     });
 
-    yield lns.commands.add(['test']);
+    yield lns.commands.map(['test']);
 
     yield fixture.read().should.eventually.deep.equal({
       config: {
