@@ -3,6 +3,6 @@ global.Promise = require('bluebird');
 require('babel-register');
 
 // Load chai should syntax globally
-var chai = require('chai');
+const chai = require('chai');
 chai.should();
 chai.use(require('chai-as-promised'));

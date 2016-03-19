@@ -1,29 +1,28 @@
-"use strict";
-let fixture = require('./fixture');
-let lns = require('../../lib/lns');
+const fixture = require('./fixture');
+const lns = require('../../lib/lns');
 
-describe('lns map', function() {
+describe('lns map', () => {
   before(() => fixture.setup());
 
   it('maps file to the store and links', async () => {
     await fixture.write({
       drive: {
-        test: 'A'
-      }
+        test: 'A',
+      },
     });
 
     await lns.commands.map(['test']);
 
     await fixture.read().should.eventually.deep.equal({
       config: {
-        paths: ['test']
+        paths: ['test'],
       },
       drive: {
-        test: '>test'
+        test: '>test',
       },
       store: {
-        test: 'A'
-      }
+        test: 'A',
+      },
     });
   });
 
@@ -31,24 +30,24 @@ describe('lns map', function() {
     await fixture.write({
       drive: {
         a: 'A',
-        b: 'B'
-      }
+        b: 'B',
+      },
     });
 
     await lns.commands.map(['a', 'b']);
 
     await fixture.read().should.eventually.deep.equal({
       config: {
-        paths: ['a', 'b']
+        paths: ['a', 'b'],
       },
       drive: {
         a: '>a',
-        b: '>b'
+        b: '>b',
       },
       store: {
         a: 'A',
-        b: 'B'
-      }
+        b: 'B',
+      },
     });
   });
 
@@ -56,27 +55,27 @@ describe('lns map', function() {
     await fixture.write({
       drive: {
         home: {
-          test: 'A'
-        }
-      }
+          test: 'A',
+        },
+      },
     });
 
     await lns.commands.map(['home/test']);
 
     await fixture.read().should.eventually.deep.equal({
       config: {
-        paths: ['~/test']
+        paths: ['~/test'],
       },
       drive: {
         home: {
-          test: '>~/test'
-        }
+          test: '>~/test',
+        },
       },
       store: {
         '~': {
-          test: 'A'
-        }
-      }
+          test: 'A',
+        },
+      },
     });
   });
 
@@ -84,25 +83,25 @@ describe('lns map', function() {
     await fixture.write({
       drive: {
         test: {
-          a: 'A'
-        }
-      }
+          a: 'A',
+        },
+      },
     });
 
     await lns.commands.map(['test']);
 
     await fixture.read().should.eventually.deep.equal({
       config: {
-        paths: ['test']
+        paths: ['test'],
       },
       drive: {
-        test: '>test'
+        test: '>test',
       },
       store: {
         test: {
-          a: 'A'
-        }
-      }
+          a: 'A',
+        },
+      },
     });
   });
 });
