@@ -1,13 +1,12 @@
 "use strict";
-let co = require('co');
 let fixture = require('./fixture');
 let lns = require('../../lib/lns');
 
 describe('lns unmap', function() {
   before(() => fixture.setup());
 
-  it('file', co.wrap(function*() {
-    yield fixture.write({
+  it('file', async () => {
+    await fixture.write({
       drive: {
         test: '>test'
       },
@@ -16,9 +15,9 @@ describe('lns unmap', function() {
       }
     });
 
-    yield lns.commands.unmap(['test']);
+    await lns.commands.unmap(['test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {paths: []},
       drive: {
         test: 'A'
@@ -27,10 +26,10 @@ describe('lns unmap', function() {
         test: 'A'
       }
     });
-  }));
+  });
 
-  it('folder', co.wrap(function*() {
-    yield fixture.write({
+  it('folder', async () => {
+    await fixture.write({
       drive: {
         folder: '>folder'
       },
@@ -41,9 +40,9 @@ describe('lns unmap', function() {
       }
     });
 
-    yield lns.commands.unmap(['folder']);
+    await lns.commands.unmap(['folder']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: []
       },
@@ -58,26 +57,26 @@ describe('lns unmap', function() {
         }
       }
     });
-  }));
+  });
 
-  it('store config', co.wrap(function*() {
-    yield fixture.write({
+  it('store config', async () => {
+    await fixture.write({
       config: {
         paths: ['test']
       }
     });
 
-    yield lns.commands.unmap(['test']);
+    await lns.commands.unmap(['test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: []
       }
     });
-  }));
+  });
 
-  it('does not touch local file', co.wrap(function*() {
-    yield fixture.write({
+  it('does not touch local file', async () => {
+    await fixture.write({
       config: {
         paths: ['test']
       },
@@ -89,9 +88,9 @@ describe('lns unmap', function() {
       }
     });
 
-    yield lns.commands.unmap(['test']);
+    await lns.commands.unmap(['test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: []
       },
@@ -102,14 +101,14 @@ describe('lns unmap', function() {
         test: 'a'
       }
     });
-  }));
+  });
 
-  it('warns if nothing is done', co.wrap(function*() {
-    yield fixture.write({
+  it('warns if nothing is done', async () => {
+    await fixture.write({
     });
 
-    yield lns.commands.unmap(['test']).should.not.be.rejected;
+    await lns.commands.unmap(['test']).should.not.be.rejected;
 
     // Todo: stub log
-  }));
+  });
 });

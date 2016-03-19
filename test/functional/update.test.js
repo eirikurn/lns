@@ -1,13 +1,12 @@
 "use strict";
-let co = require('co');
 let fixture = require('./fixture');
 let lns = require('../../lib/lns');
 
 describe('lns update', function() {
   before(() => fixture.setup());
 
-  it('creates new link', co.wrap(function*() {
-    yield fixture.write({
+  it('creates new link', async () => {
+    await fixture.write({
       config: {
         paths: ['test']
       },
@@ -17,9 +16,9 @@ describe('lns update', function() {
       }
     });
 
-    yield lns.commands.update();
+    await lns.commands.update();
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['test']
       },
@@ -30,10 +29,10 @@ describe('lns update', function() {
         test: 'A'
       }
     });
-  }));
+  });
 
-  it('only creates link if parent folder exists', co.wrap(function*() {
-    yield fixture.write({
+  it('only creates link if parent folder exists', async () => {
+    await fixture.write({
       config: {
         paths: ['missing/test']
       },
@@ -45,9 +44,9 @@ describe('lns update', function() {
       }
     });
 
-    yield lns.commands.update();
+    await lns.commands.update();
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['missing/test']
       },
@@ -58,10 +57,10 @@ describe('lns update', function() {
         }
       }
     });
-  }));
+  });
 
-  it('ignores existing link', co.wrap(function*() {
-    yield fixture.write({
+  it('ignores existing link', async () => {
+    await fixture.write({
       config: {
         paths: ['test']
       },
@@ -73,9 +72,9 @@ describe('lns update', function() {
       }
     });
 
-    yield lns.commands.update();
+    await lns.commands.update();
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['test']
       },
@@ -86,10 +85,10 @@ describe('lns update', function() {
         test: 'A'
       }
     });
-  }));
+  });
 
-  it('does not overwrite local files', co.wrap(function*() {
-    yield fixture.write({
+  it('does not overwrite local files', async () => {
+    await fixture.write({
       config: {
         paths: ['test']
       },
@@ -101,6 +100,6 @@ describe('lns update', function() {
       }
     });
 
-    yield lns.commands.update().should.be.rejectedWith('exists');
-  }));
+    await lns.commands.update().should.be.rejectedWith('exists');
+  });
 });

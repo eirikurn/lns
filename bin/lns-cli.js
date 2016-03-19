@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Register babel require transform to run ES6 code reliably
 global.Promise = require('bluebird');
-require("babel/register");
+require('babel-register');
 
 // Initialise logger
 process.title = 'lns';
@@ -15,6 +15,10 @@ var argv = require('yargs').argv;
 
 // Argument handling
 var command = argv._.shift();
+
+if (!lns.commands[command]) {
+  command = 'help';
+}
 
 // Run command
 process.on('uncaughtException', errorHandler);

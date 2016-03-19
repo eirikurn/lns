@@ -1,21 +1,20 @@
 "use strict";
-let co = require('co');
 let fixture = require('./fixture');
 let lns = require('../../lib/lns');
 
 describe('lns map', function() {
   before(() => fixture.setup());
 
-  it('maps file to the store and links', co.wrap(function*() {
-    yield fixture.write({
+  it('maps file to the store and links', async () => {
+    await fixture.write({
       drive: {
         test: 'A'
       }
     });
 
-    yield lns.commands.map(['test']);
+    await lns.commands.map(['test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['test']
       },
@@ -26,19 +25,19 @@ describe('lns map', function() {
         test: 'A'
       }
     });
-  }));
+  });
 
-  it('maps multiple files', co.wrap(function*() {
-    yield fixture.write({
+  it('maps multiple files', async () => {
+    await fixture.write({
       drive: {
         a: 'A',
         b: 'B'
       }
     });
 
-    yield lns.commands.map(['a', 'b']);
+    await lns.commands.map(['a', 'b']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['a', 'b']
       },
@@ -51,10 +50,10 @@ describe('lns map', function() {
         b: 'B'
       }
     });
-  }));
+  });
 
-  it('maps user files to special store folder', co.wrap(function*() {
-    yield fixture.write({
+  it('maps user files to special store folder', async () => {
+    await fixture.write({
       drive: {
         home: {
           test: 'A'
@@ -62,9 +61,9 @@ describe('lns map', function() {
       }
     });
 
-    yield lns.commands.map(['home/test']);
+    await lns.commands.map(['home/test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['~/test']
       },
@@ -79,10 +78,10 @@ describe('lns map', function() {
         }
       }
     });
-  }));
+  });
 
-  it('maps folder to the store', co.wrap(function*() {
-    yield fixture.write({
+  it('maps folder to the store', async () => {
+    await fixture.write({
       drive: {
         test: {
           a: 'A'
@@ -90,9 +89,9 @@ describe('lns map', function() {
       }
     });
 
-    yield lns.commands.map(['test']);
+    await lns.commands.map(['test']);
 
-    yield fixture.read().should.eventually.deep.equal({
+    await fixture.read().should.eventually.deep.equal({
       config: {
         paths: ['test']
       },
@@ -105,5 +104,5 @@ describe('lns map', function() {
         }
       }
     });
-  }));
+  });
 });

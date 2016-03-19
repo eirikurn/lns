@@ -1,5 +1,4 @@
 "use strict";
-let co = require('co');
 let fs = require('../../lib/utils/fs');
 let lns = require('../../lib/lns');
 let store = require('../../lib/store');
@@ -24,39 +23,39 @@ exports.setup = function(args) {
   return lns.load(args);
 };
 
-exports.write = co.wrap(function*(structure) {
-  yield [
+exports.write = async function(structure) {
+  await Promise.all([
     fs.rimraf(sandbox.config),
     fs.rimraf(sandbox.drive),
     fs.rimraf(sandbox.store)
-  ];
+  ]);
 
   if (structure.config) {
-    yield fs.mkdirp(sandboxPath);
-    yield fs.writeFile(sandbox.config, JSON.stringify(structure.config));
+    await fs.mkdirp(sandboxPath);
+    await fs.writeFile(sandbox.config, JSON.stringify(structure.config));
   }
 
-  yield [
+  await Promise.all([
     store.load(),
     writeFolder(sandbox.drive, structure.drive),
     writeFolder(sandbox.store, structure.store)
-  ];
-});
+  ]);
+};
 
-exports.read = co.wrap(function*() {
-  var config = yield fs.readFileOrNull(sandbox.config, {encoding: 'utf8'});
+exports.read = async function() {
+  var config = await fs.readFileOrNull(sandbox.config, {encoding: 'utf8'});
   config = JSON.parse(config);
 
   return skipNulls({
     config: config,
-    drive: yield readFolder(sandbox.drive),
-    store: yield readFolder(sandbox.store)
+    drive: await readFolder(sandbox.drive),
+    store: await readFolder(sandbox.store)
   });
-});
+};
 
-function* writeFolder(folder, contents) {
+async function writeFolder(folder, contents) {
   if (contents == null) return;
-  yield fs.mkdirp(folder);
+  await fs.mkdirp(folder);
 
   for (let name of Object.keys(contents || {})) {
     let path = pathUtil.join(folder, name);
@@ -64,21 +63,21 @@ function* writeFolder(folder, contents) {
 
     if ('object' === typeof data) {
       // Folder
-      yield writeFolder(path, data);
+      await writeFolder(path, data);
     } else if (data[0] == '>') {
       // Symbolic link
       let target = pathUtil.join(sandbox.store, data.slice(1));
-      yield fs.symlink(target, path);
+      await fs.symlink(target, path);
     } else {
       // Normal file
-      yield fs.writeFile(path, data);
+      await fs.writeFile(path, data);
     }
   }
 }
 
-function* readFolder(folder) {
+async function readFolder(folder) {
   try {
-    var names = yield fs.readdir(folder);
+    var names = await fs.readdir(folder);
   } catch(err) {
     if (err.code === 'ENOENT') return null;
     throw err;
@@ -88,14 +87,14 @@ function* readFolder(folder) {
   for (let name of names) {
     let path = pathUtil.join(folder, name);
 
-    let stats = yield fs.lstat(path);
+    let stats = await fs.lstat(path);
     if (stats.isSymbolicLink()) {
-      let storePath = yield fs.readlink(path);
+      let storePath = await fs.readlink(path);
       contents[name] = '>' + pathUtil.relative(sandbox.store, storePath);
     } else if (stats.isDirectory()) {
-      contents[name] = yield readFolder(path);
+      contents[name] = await readFolder(path);
     } else {
-      contents[name] = yield fs.readFile(path, {encoding: 'utf8'});
+      contents[name] = await fs.readFile(path, {encoding: 'utf8'});
     }
   }
   return contents;
