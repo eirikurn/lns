@@ -5,16 +5,16 @@ require('babel-register');
 
 // Initialise logger
 process.title = 'lns';
-var log = require('npmlog');
+const log = require('npmlog');
 log.verbose('cli', process.argv);
 
 // Dependencies
-var lns = require('../lib/lns');
-var errorHandler = require('../lib/utils/error-handler');
-var argv = require('yargs').argv;
+const lns = require('../lib/lns');
+const errorHandler = require('../lib/utils/error-handler');
+const argv = require('yargs').argv;
 
 // Argument handling
-var command = argv._.shift();
+let command = argv._.shift();
 
 if (!lns.commands[command]) {
   command = 'help';
