@@ -50,7 +50,8 @@ async function readFolder(folder) {
     const stats = await fs.lstat(path);
     if (stats.isSymbolicLink()) {
       const storePath = await fs.readlink(path);
-      contents[name] = '>' + pathUtil.relative(sandbox.store, storePath);
+      const relPath = pathUtil.relative(sandbox.store, storePath);
+      contents[name] = `>${relPath}`;
     } else if (stats.isDirectory()) {
       contents[name] = await readFolder(path);
     } else {

@@ -34,12 +34,10 @@ async function unmap_(path) {
     // Copy current version back.
     await fs.cpr(target, source);
   } else if (!syncedSource) {
-
     // Don't do anything at this point if file isn't mapped.
-    log.warn('unmap', 'not mapped: ' + path);
+    log.warn('unmap', `not mapped: ${path}`);
     return;
   } else if (syncedSource !== source) {
-
     // Trying to unmap child of mapped folder.
     log.error('unmap', `can not unmap child of mapped folder ${syncedSource}`);
     return;

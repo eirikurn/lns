@@ -22,9 +22,9 @@ const store = module.exports = {
   closestSync(absPath) {
     const path = store.externalToRel(absPath);
 
-    const syncPath = store.config.paths.reduce((found, syncPath) => {
+    const syncPath = store.config.paths.reduce((found, storePath) => {
       if (found) return found;
-      return path.indexOf(syncPath) === 0 ? syncPath : found;
+      return path.indexOf(storePath) === 0 ? storePath : found;
     }, false);
     return syncPath && store.relToExternal(syncPath);
   },

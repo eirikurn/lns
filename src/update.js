@@ -42,12 +42,12 @@ async function update_(path, options) {
 
   if (alreadyLinked) {
     // Exit early if path is already linked correctly.
-    return;
+    return null;
   }
 
   if (!parentExists) {
     // Only create links if parent folder exists.
-    return;
+    return null;
   }
 
   if (sourceExists) {
@@ -60,7 +60,7 @@ async function update_(path, options) {
       await fs.rimraf(source);
     } else {
       // Don't lose local changes.
-      throw new Error('lns: ' + path + ': Path already exists locally. Review and specify --ours or --theirs.');
+      throw new Error(`lns: ${path}: Path already exists locally. Review and specify --ours or --theirs.`);
     }
   }
 

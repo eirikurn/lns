@@ -4,13 +4,12 @@ const Promise = require('bluebird');
 const fs = require('fs');
 
 function orNullify(func) {
-  return (...args) => {
-    return func.apply(null, args)
+  return (...args) =>
+    func.apply(null, args)
       .catch(err => {
         if (err.code === 'ENOENT') return null;
         throw err;
       });
-  };
 }
 
 exports.rename = Promise.promisify(fs.rename);

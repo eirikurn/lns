@@ -91,7 +91,7 @@ async function createQuestions() {
     {
       type: 'confirm',
       name: 'createStore',
-      message: ({ store, storeManual }) => 'Create new store in ' + home.resolve(storeManual || store),
+      message: ({ store, storeManual }) => `Create new store in ${home.resolve(storeManual || store)}`,
       when: async ({ store, storeManual }) => {
         const exists = await pathHasStore(storeManual || store);
         return !exists;
