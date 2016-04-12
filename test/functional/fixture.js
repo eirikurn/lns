@@ -1,6 +1,6 @@
-const fs = require('../../lib/utils/fs');
-const lns = require('../../lib/lns');
-const store = require('../../lib/store');
+const fs = require('../../src/utils/fs');
+const lns = require('../../src/lns');
+const store = require('../../src/store');
 const pathUtil = require('path');
 
 const sandboxPath = pathUtil.join(__dirname, 'sandbox');

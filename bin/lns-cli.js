@@ -3,7 +3,6 @@
 
 // Register babel require transform to run ES6 code reliably
 global.Promise = require('bluebird');
-require('babel-register');
 require('source-map-support/register');
 
 // Initialise logger

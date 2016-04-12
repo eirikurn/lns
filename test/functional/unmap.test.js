@@ -1,5 +1,5 @@
 const fixture = require('./fixture');
-const lns = require('../../lib/lns');
+const lns = require('../../src/lns');
 
 describe('lns unmap', () => {
   before(() => fixture.setup());
