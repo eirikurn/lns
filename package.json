@@ -1,7 +1,7 @@
 {
   "name": "lns",
   "version": "1.3.0",
-  "description": "Symbolic link online sync manager",
+  "description": "Symlink manager to sync files across computers",
   "main": "./lib/lns.js",
   "scripts": {
     "lint": "eslint .",
