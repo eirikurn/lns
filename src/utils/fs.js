@@ -41,3 +41,14 @@ exports.lstatOrNull = orNullify(exports.lstat);
 exports.readlink = Promise.promisify(fs.readlink);
 
 exports.readdir = Promise.promisify(fs.readdir);
+
+exports.realpath = Promise.promisify(fs.realpath);
+
+exports.safeRealpath = (path, cache) =>
+  exports.realpath(path, cache)
+    .catch(error => {
+      if (error.code === 'ENOENT') {
+        return path;
+      }
+      throw error;
+    });
