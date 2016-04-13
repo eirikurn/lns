@@ -4,6 +4,9 @@
 live in one place, like Google Drive, Dropbox or a normal git repository but can be symlinked to anywhere on your
 computers.
 
+> WARNING: Ellen Sync is still in early development. There is already a growing collection of integration tests. But to
+be safe, make sure you have periodic backups of your files.
+
 ## Setup
 
 First make sure you have [node.js](https://nodejs.org/en/), then open a terminal and run the following to install `lns`.
