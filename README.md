@@ -4,6 +4,9 @@
 live in one place, like Google Drive, Dropbox or a normal git repository but can be symlinked to anywhere on your
 computers.
 
+![CI Status](https://img.shields.io/circleci/project/eirikurn/lns.svg?maxAge=2592000)
+![npm](https://img.shields.io/npm/v/lns.svg?maxAge=2592000)
+
 > WARNING: Ellen Sync is still in early development. There is already a growing collection of integration tests. But to
 be safe, make sure you have periodic backups of your files.
 
