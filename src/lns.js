@@ -48,5 +48,6 @@ lns.commands = {};
 for (const c of commands) {
   lns.commands[c] = ensureLoaded(require(`./${c}.js`));
 }
+lns.commands['init'] = require('./init.js');
 
 lns.version = require('../package.json').version;
